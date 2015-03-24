@@ -96,7 +96,7 @@ template <typename Dtype>
 class StatsLayer : public Layer<Dtype> {
  public:
   /**
-   * @param param provides AccuracyParameter accuracy_param,
+   * @param param provides StatsParameter accuracy_param,
    *     with AccuracyLayer options:
    *   - top_k (\b optional, default 1).
    *     Sets the maximum rank @f$ k @f$ at which a prediction is considered
