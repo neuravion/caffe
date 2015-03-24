@@ -911,6 +911,8 @@ const char* UpgradeV1LayerType(const V1LayerParameter_LayerType type) {
     return "Split";
   case V1LayerParameter_LayerType_SLICE:
     return "Slice";
+  case V1LayerParameter_LayerType_STATS:
+    return "Stats";
   case V1LayerParameter_LayerType_TANH:
     return "TanH";
   case V1LayerParameter_LayerType_WINDOW_DATA:
