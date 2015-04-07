@@ -7,6 +7,7 @@
 #include "caffe/util/io.hpp"
 #include "caffe/util/math_functions.hpp"
 #include "caffe/vision_layers.hpp"
+#include <iomanip>
 
 namespace caffe {
 
@@ -14,7 +15,9 @@ template <typename Dtype>
 void StatsLayer<Dtype>::LayerSetUp(
   const vector<Blob<Dtype>*>& bottom, 
   const vector<Blob<Dtype>*>& top) {
-  top_k_ = this->layer_param_.accuracy_param().top_k();
+  top_k_ = this->layer_param_.stats_param().top_k();
+  output_filename_ = this->layer_param_.stats_param().output_file();
+  ofs_ = new std::ofstream( output_filename_.c_str(), std::ofstream::out );
 }
 
 template <typename Dtype>
@@ -51,13 +54,16 @@ void StatsLayer<Dtype>::Forward_cpu(const vector<Blob<Dtype>*>& bottom,
 
     //  Output actual label and probability values
     //  to stdout
-    printf("%d ", (int)bottom_label[i]);
+    //printf("%d ", (int)bottom_label[i]);
+    (*ofs_) << bottom_label[i] <<" ";
 
     for (int k = 0; k < dim; k++) {
-        printf("%0.15f ", (double)bottom_data[i*dim+k]);
+        //printf("%0.15f ", (double)bottom_data[i*dim+k]);
+        (*ofs_) << std::setprecision(15) << (double)bottom_data[i*dim+k] << " ";
     }
 
-    printf("\n");
+    //printf("\n");
+    (*ofs_) << std::endl;
 
     std::partial_sort(
         bottom_data_vector.begin(), bottom_data_vector.begin() + top_k_,

@@ -104,7 +104,11 @@ class StatsLayer : public Layer<Dtype> {
    *     correct if the correct label is among the top 5 predicted labels.
    */
   explicit StatsLayer(const LayerParameter& param)
-      : Layer<Dtype>(param) {}
+      : Layer<Dtype>(param), ofs_(NULL) {}
+  virtual ~StatsLayer() { 
+    ofs_->close(); 
+    delete ofs_;
+  }
   virtual void LayerSetUp(const vector<Blob<Dtype>*>& bottom,
       const vector<Blob<Dtype>*>& top);
   virtual void Reshape(const vector<Blob<Dtype>*>& bottom,
@@ -157,6 +161,8 @@ class StatsLayer : public Layer<Dtype> {
   }
 
   int top_k_;
+  std::string output_filename_;
+  std::ofstream* ofs_;
 };
 
 /**
