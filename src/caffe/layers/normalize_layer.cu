@@ -47,7 +47,6 @@ void NormalizeLayer<Dtype>::Backward_gpu(const vector<Blob<Dtype>*>& top,
   }
 }
 
-INSTANTIATE_CLASS(NormalizeLayer);
-
+INSTANTIATE_LAYER_GPU_FUNCS(NormalizeLayer);
 
 }  // namespace caffe
