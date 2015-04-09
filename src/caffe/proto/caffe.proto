@@ -360,7 +360,7 @@ message StatsParameter {
   // the top k scoring classes.  By default, only compare to the top scoring
   // class (i.e. argmax).
   optional uint32 top_k = 1 [default = 1];
-  string output_file = 2;
+  required string output_file = 2;
 }
 
 // Message that stores parameters shared by loss layers
@@ -871,7 +871,6 @@ message V1LayerParameter {
   optional LossParameter loss_param = 42;
   optional StatsParameter stats_param = 43;
   optional V0LayerParameter layer = 1;
-  optional StatsParameter stats_param = 43;
 }
 
 // DEPRECATED: V0LayerParameter is the old way of specifying layer parameters
