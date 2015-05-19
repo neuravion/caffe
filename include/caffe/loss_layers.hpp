@@ -378,6 +378,31 @@ class EuclideanLossLayer : public LossLayer<Dtype> {
   Blob<Dtype> diff_;
 };
 
+template <typename Dtype>
+class NormalizedEuclideanLossLayer : public LossLayer<Dtype> {
+ public:
+  explicit NormalizedEuclideanLossLayer(const LayerParameter& param)
+      : LossLayer<Dtype>(param), diff_(), mean_(), mean_diff_() {}
+  virtual void Reshape(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
+
+  virtual inline const char* type() const { return "NormalizedEuclideanLoss"; }
+
+ protected:
+  virtual void Forward_cpu(const vector<Blob<Dtype>*>& bottom,
+      const vector<Blob<Dtype>*>& top);
+
+  virtual void Backward_cpu(const vector<Blob<Dtype>*>& top,
+      const vector<bool>& propagate_down, const vector<Blob<Dtype>*>& bottom) {
+    for (int i = 0; i < propagate_down.size(); ++i) {
+      if (propagate_down[i]) { NOT_IMPLEMENTED; }
+    }
+  }
+  Blob<Dtype> diff_;
+  Blob<Dtype> mean_diff_;
+  Blob<Dtype> mean_;
+};
+
 /**
  * @brief Computes the hinge loss for a one-of-many classification task.
  *

@@ -516,6 +516,8 @@ V1LayerParameter_LayerType UpgradeV0LayerType(const string& type) {
     return V1LayerParameter_LayerType_TANH;
   } else if (type == "window_data") {
     return V1LayerParameter_LayerType_WINDOW_DATA;
+  } else if (type == "normalized_euclidean_loss") {
+    return V1LayerParameter_LayerType_NORMALIZED_EUCLIDEAN_LOSS;
   } else {
     LOG(FATAL) << "Unknown layer name: " << type;
     return V1LayerParameter_LayerType_NONE;
@@ -925,6 +927,8 @@ const char* UpgradeV1LayerType(const V1LayerParameter_LayerType type) {
     return "Threshold";
   case V1LayerParameter_LayerType_NORMALIZE:
     return "Normalize";
+  case V1LayerParameter_LayerType_NORMALIZED_EUCLIDEAN_LOSS:
+    return "NormalizedEuclideanLoss";
   default:
     LOG(FATAL) << "Unknown V1LayerParameter layer type: " << type;
     return "";
